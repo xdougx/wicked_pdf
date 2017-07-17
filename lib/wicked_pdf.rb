@@ -73,8 +73,6 @@ class WickedPdf
     command << url
     command << generated_pdf_file.path.to_s
 
-    print_command(command.inspect) # if in_development_mode?
-
     err = Open3.popen3(*command) do |_stdin, _stdout, stderr|
       stderr.read
     end
@@ -95,17 +93,9 @@ class WickedPdf
 
   private
 
-  # def in_development_mode?
-  #   return Rails.env == 'development' if defined?(Rails.env)
-  #   RAILS_ENV == 'development' if defined?(RAILS_ENV)
-  # end
 
   def on_windows?
     RbConfig::CONFIG['target_os'] =~ /mswin|mingw/
-  end
-
-  def print_command(cmd)
-    Rails.logger.debug '[wicked_pdf]: ' + cmd
   end
 
   def retrieve_binary_version
